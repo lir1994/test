@@ -1,0 +1,8 @@
+安装mysql
+# 安装mysql客户端
+$ sudo apt-get install mysql-server
+# 设置mysql 数据库root密码为: 123456
+$ sudo apt-get install mysql-client
+$ sudo apt-get install libmysqlclient-dev
+# 验证是否成功
+$ sudo netstat -tap | grep mysql
