@@ -1,0 +1,40 @@
+{% extends 'index.html' %}
+{% block title %}详情页{% endblock %}
+{% block content %}
+	<div>
+
+		<h3 align="center" _n="{{ blogone.title }}" _con="{{blogone.content}}"" _au="{{blogone.author}}"
+		_pub="{{blogone.pubtime}}"  align="{{center}}">{{ blogone.title }}</h3>
+		<p>{{blogone.content}}</p>
+		<span>{{ blogone.author }}</span><br>
+		<span>{{ blogone.pubtime }}</span><br>
+		<p align="right" onclick="addcollect()  "><<加入收藏夹>></p>
+		
+		
+	</div>
+
+<script>
+	function addcollect(){
+		$.ajax({
+			url:'/operate/addcollect/',
+			type:'post',
+			datatype:'json',
+			data:{
+				'title':$('h3').attr('_n'),
+				'content':$('h3').attr('_con'),
+				'author':$('h3').attr('_au'),
+				'pubtime':$('h3').attr('_pub'),
+
+			},
+			success:function(data){
+				location.href="{% url 'collect' %}";
+			},
+			error:function(error){
+				console.log(error);
+			}
+		})
+	}
+</script>
+
+	
+{% endblock %}

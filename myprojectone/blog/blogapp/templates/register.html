@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+	注册页面
+{% endblock %}
+{% block head %}
+	<script type="text/javascript" src="{% static 'js/jquery-1.12.4.js' %}"></script>
+{% endblock %}
+{% block content %}
+	<form action="{% url 'register_in' %}" method="post">
+		{% csrf_token %}
+		用户名：<input type="user" name="username" id="user_name"><span id="span_user">{{ massage }}</span><br><br>
+		密码：<input type="password" name="password" id="password"><br><br>
+		确认密码：<input type="password" name="spassword" id="spassword"><span id="span_word">{{ massage1 }}</span><br><br>
+		邮箱：<input type="text" name="email" id="email"><br><br>
+		电话：<input type="text" name="phone" id="phone"><br><br>
+		<input type="submit" name="" value="提交">
+		
+	</form>
+
+<script>
+	var aaa = document.getElementById('user_name')
+	var inputusername = $(aaa)
+	var bbb = document.getElementById('span_user')
+	var spanusername = $(bbb)
+	var ccc = document.getElementById('password')
+	var inputpassword = $(ccc)
+	var ddd = document.getElementById('spassword')
+	var inputspassword = $(ddd)
+	var eee = document.getElementById('span_word') 
+	var spanpassword = $(eee)
+
+	inputusername.blur(function(){
+		var name = inputusername.val();
+		
+		$.ajax({
+			url:'http://localhost:8000/user/checkname/',
+			type:'post',
+			datatype:'json',
+			data:{
+				'username':name,
+				
+			},
+			async:'true',
+			success:function(data){
+				spanusername.text(data.message);
+				
+			},
+			error:function(err){
+				console.log('获取服务器响应失败');
+				console.log('错误信息：'+err);
+
+			}
+		});
+	});
+	inputspassword.blur(function(){
+		var word = inputpassword.val();
+		var sword = inputspassword.val();
+		$.ajax({
+			url:'http://localhost:8000/user/checkword/',
+			type:'post',
+			datatype:'json',
+			data:{
+				'password':word,
+				'spassword':sword,
+			},
+			async:'true',
+			success:function(data){
+				spanpassword.text(data.message1);
+			},
+			error:function(err){
+				console.log('获取服务器响应失败');
+				console.log('错误信息：'+err);
+
+			}
+		});
+	});
+
+</script>
+{% endblock %}

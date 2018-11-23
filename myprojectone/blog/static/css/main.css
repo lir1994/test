@@ -1,0 +1,13 @@
+*{
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.contitle{
+	padding-left: center;
+	width: 1000px;
+	font-size: 20px;
+}
+.contitle li{
+	width: 200px;
+}

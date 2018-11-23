@@ -1,0 +1,18 @@
+{% extends 'index.html' %}
+{% block title %}收藏页{% endblock %}
+{% block content %}
+	<div>
+		{% for co in coll %}
+			收藏博客{{ forloop.counter }}
+			<ul>
+				<li>博客编号：{{ co.collorderNo }}</li>
+				{% for v in dic.values %}
+					<p>{{ v }}</p>
+				{% endfor %}
+		
+				<li>收藏时间：{{ co.colltime }}</li>				
+			</ul>
+			<br>
+		{% endfor %}
+	</div>
+{% endblock %}

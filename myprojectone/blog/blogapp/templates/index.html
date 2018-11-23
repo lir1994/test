@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+	首页
+{% endblock %}
+{% block head %}
+	<script type="text/javascript" src="{% static 'js/jquery-1.12.4.js' %}"></script>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+{% endblock %}
+
+{% block contend %}
+	{% if request.session.user_name %}
+		{{ request.session.user_name }},的博客首页
+		<a href="{% url 'login_out' %}">退出</a>
+	{% else %}
+		<a href="{% url 'login' %}">登录</a>
+		<a href="{% url 'register' %}">注册</a>
+	{% endif %}
+	<div align="right" style="float: right;">
+		<span>|</span><a href="{% url 'index' %}">博客首页</a>
+		<span>|</span><a href="">我的博客</a>
+		<span>|</span><a href="">用户中心</a>
+		<span>|</span><a href="{% url 'collect' %}">收藏夹</a>
+		<span>|</span><a href="">我的评论</a>
+	</div>
+{% endblock %}
+{% block content %}
+	{% for class in blog_list.classify %}
+	<div class="contitle">
+		<ul>
+			<li style="float: left;">{{ class.cname }}</li>
+		</ul>
+	</div>
+	{% endfor %}
+
+	{% for class in blog_list.classify %}
+		<br>
+		{% for b in blog_list.blog %}
+			{% if class.cname == b.types.cname  %}
+				<a href="{{ b.get_absolute_url }}">{{ b.title }}</a><br>
+				{{ b.tag.tname }}<br>
+				{{ b.content }}<br>
+			<p><span style="float: right;">{{ b.author }}</span><br></p>
+			<span style="float: right;">{{ b.pubtime }}</span>
+				
+			{% endif %}
+		{% endfor %}
+	{% endfor %}
+{% endblock %}
